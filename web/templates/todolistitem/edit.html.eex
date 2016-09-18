@@ -1,0 +1,6 @@
+<h2>Edit todolistitem</h2>
+
+<%= render Todoapp.IncludesView, "todolistitem_form.html", changeset: @changeset,
+                        action: ""  %>
+
+<%= link "Back", to: "/" %>

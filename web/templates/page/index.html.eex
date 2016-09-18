@@ -1,0 +1,24 @@
+<div class="col-md-3 col-sm-4 col-xs-12 sidebar">
+  <%= render Todoapp.IncludesView, "todolistitem_form.html", changeset: @todo_list_changeset,
+                          action: "/todoitem/create"  %>
+</div>
+<div class="col-md-9 col-sm-8 col-xs-12">
+  <%= for todo_item <- @todo_list do %>
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2><%= todo_item.header %></h2>
+        </div>
+        <div class="panel-body">
+          <p>
+            <%= todo_item.text %>
+          </p>
+        </div>
+        <div class="panel-footer">
+          <a role="button" class="btn btn-primary" href="/todoitem/edit/<%= todo_item.id %>">Edit</a>
+          <a role="button" class="btn btn-danger" href="/todoitem/delete/<%= todo_item.id %>">Delete</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
