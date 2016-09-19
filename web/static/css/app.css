@@ -28,3 +28,17 @@ footer {
 .navbar, .alert {
   margin-bottom: 0;
 }
+
+.todo_item {
+  font-size: 2.5rem;
+  margin: 1.5rem 1rem;
+  cursor: pointer;
+}
+
+.todo_item_btn {
+  display: none;
+}
+
+.todo_item_btn_show {
+  display: inline;
+}

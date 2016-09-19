@@ -19,3 +19,21 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+$(document).on("click", ".todo_item",
+  function() {
+    var input = $("<input>", {val: $(this).text(), type: "text", id: this.id, class: "todo_item_input"});
+    $(this).replaceWith(input);
+    $(".todo_item_btn"+this.id).addClass("todo_item_btn_show");
+    input.select();
+  }
+);
+
+$(document).on("blur", ".todo_item_input",
+  function() {
+    var paragraph = $("<p>", {id: this.id, class: "todo_item"});
+    paragraph.text($(this).val());
+    $(this).replaceWith(paragraph);
+    $(".todo_item_btn"+this.id).removeClass("todo_item_btn_show");
+    paragraph.select();
+  }
+);
