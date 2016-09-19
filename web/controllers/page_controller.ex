@@ -6,7 +6,7 @@ defmodule Todoapp.PageController do
 
   def index(conn, _params) do
     conn |> render("index.html", [
-      title: "TodoApp",
+      title: "Homepage",
        todo_list: Repo.all(Todolistitem),
         todo_list_changeset: Todolistitem.changeset(%Todolistitem{})
         ]

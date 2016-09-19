@@ -27,11 +27,4 @@ defmodule Todoapp.Router do
     put "/edit/:id", TodolistitemController, :update
     get "/delete/:id", TodolistitemController, :delete
   end
-
-  #scope "/admin", Todoapp do
-    #pipe_through :browser
-
-
-    #resources "/todolistitems", TodolistitemController
-  #end
 end

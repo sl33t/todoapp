@@ -10,11 +10,11 @@ defmodule Todoapp.TodolistitemController do
     case Repo.insert(changeset) do
       {:ok, _todolistitem} ->
         conn
-        |> put_flash(:info, "Todolistitem created successfully.")
+        |> put_flash(:info, "Item created successfully.")
         |> redirect(to: "/")
       {:error, changeset} ->
         conn
-        |> put_flash(:error, "Todolistitem failed to create")
+        |> put_flash(:error, "Item failed to create")
         |> redirect(to: "/")
     end
   end
@@ -22,7 +22,7 @@ defmodule Todoapp.TodolistitemController do
   def edit(conn, %{"id" => id}) do
     todolistitem = Repo.get!(Todolistitem, id)
     changeset = Todolistitem.changeset(todolistitem)
-    render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Add new TodoListItems"])
+    render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Edit"])
   end
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
@@ -32,10 +32,10 @@ defmodule Todoapp.TodolistitemController do
     case Repo.update(changeset) do
       {:ok, todolistitem} ->
         conn
-        |> put_flash(:info, "Todolistitem updated successfully.")
+        |> put_flash(:info, "Item updated successfully.")
         |> redirect(to: "/")
       {:error, changeset} ->
-        render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Add new TodoListItems"])
+        render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Edit"])
     end
   end
 
@@ -47,7 +47,7 @@ defmodule Todoapp.TodolistitemController do
     Repo.delete!(todolistitem)
 
     conn
-    |> put_flash(:info, "Todolistitem deleted successfully.")
+    |> put_flash(:info, "Item deleted successfully.")
     |> redirect(to: "/")
   end
 end
