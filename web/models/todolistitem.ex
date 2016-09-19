@@ -3,7 +3,6 @@ defmodule Todoapp.Todolistitem do
 
   schema "todolistitems" do
     field :text, :string
-    field :header, :string
 
     timestamps()
   end
@@ -13,7 +12,7 @@ defmodule Todoapp.Todolistitem do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:text, :header])
-    |> validate_required([:text, :header])
+    |> cast(params, [:text])
+    |> validate_required([:text])
   end
 end
