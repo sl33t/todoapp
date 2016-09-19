@@ -12,7 +12,7 @@ defmodule Todoapp.TodolistitemController do
         conn
         |> put_flash(:info, "Item created successfully.")
         |> redirect(to: "/")
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Item failed to create")
         |> redirect(to: "/")
@@ -30,7 +30,7 @@ defmodule Todoapp.TodolistitemController do
     changeset = Todolistitem.changeset(todolistitem, todolistitem_params)
 
     case Repo.update(changeset) do
-      {:ok, todolistitem} ->
+      {:ok, _todolistitem} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
         |> redirect(to: "/")
