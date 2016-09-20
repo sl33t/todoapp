@@ -49,10 +49,7 @@ $(document).on("blur", ".todo_item",
         headers: {
             "X-CSRF-TOKEN": csrf
         },
-        dataType: "json",
-        success: function (data) {
-          console.log(data);
-        }
+        dataType: "json"
     });
   }
 );

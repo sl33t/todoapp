@@ -27,9 +27,11 @@ defmodule Todoapp.TodolistitemController do
       {:ok, _todolistitem} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
+        json(conn, :ok)
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Item failed to update.")
+        json(conn, :error)
     end
   end
 
