@@ -2,6 +2,8 @@ defmodule Todoapp.AuthController do
   use Todoapp.Web, :controller
   plug Ueberauth
 
+  alias Todoapp.User
+
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
     |> put_flash(:error, "Authentication denied.")
@@ -12,7 +14,7 @@ defmodule Todoapp.AuthController do
     case User.find_or_create(auth) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Successfully authenticated." + user)
+        |> put_flash(:info, "Successfully authenticated." <> user.name)
         |> redirect(to: "/")
       {:error, reason} ->
         conn

@@ -39,8 +39,8 @@ defmodule Todoapp.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:ueberauth, "~> 0.3"},
-     {:ueberauth_google, "~> 0.3"},
-     {:ueberauth_github, "~> 0.2"}]
+     {:ueberauth_github, github: "ueberauth/ueberauth_github"},
+     {:ueberauth_google, github: "ueberauth/ueberauth_google"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
