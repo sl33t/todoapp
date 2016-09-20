@@ -8,6 +8,10 @@ defmodule Todoapp.User do
     timestamps()
   end
 
+  def find_or_create(auth) do
+    {:ok, "hey"}
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """

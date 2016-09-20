@@ -19,7 +19,7 @@ defmodule Todoapp.Mixfile do
   def application do
     [mod: {Todoapp, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :logger, :ueberauth, :ueberauth_google]]
+                    :phoenix_ecto, :postgrex, :logger, :ueberauth, :ueberauth_google, :ueberauth_github]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,8 @@ defmodule Todoapp.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:ueberauth, "~> 0.3"},
-     {:ueberauth_google, "~> 0.3"}]
+     {:ueberauth_google, "~> 0.3"},
+     {:ueberauth_github, "~> 0.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
