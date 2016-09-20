@@ -17,6 +17,8 @@ defmodule Todoapp.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    post "/create", TodolistitemController, :create
     put "/edit/:id", TodolistitemController, :update
+    get "/delete/:id", TodolistitemController, :delete
   end
 end

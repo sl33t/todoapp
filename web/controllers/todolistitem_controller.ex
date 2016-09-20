@@ -19,12 +19,6 @@ defmodule Todoapp.TodolistitemController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    todolistitem = Repo.get!(Todolistitem, id)
-    changeset = Todolistitem.changeset(todolistitem)
-    render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Edit"])
-  end
-
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
     todolistitem = Repo.get!(Todolistitem, id)
     changeset = Todolistitem.changeset(todolistitem, todolistitem_params)
