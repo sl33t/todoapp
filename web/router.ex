@@ -21,4 +21,11 @@ defmodule Todoapp.Router do
     put "/edit/:id", TodolistitemController, :update
     get "/delete/:id", TodolistitemController, :delete
   end
+
+  scope "/auth", Todoapp do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
 end
