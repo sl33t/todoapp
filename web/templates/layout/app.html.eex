@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Ricky Catron">
+    <meta name="csrf" content="<%= Plug.CSRFProtection.get_csrf_token() %>">
 
     <link rel="icon" href="<%= static_path(@conn, "/favicon.ico") %>"/>
     <title>TodoApp: <%= @title %></title>

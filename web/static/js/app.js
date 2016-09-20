@@ -38,5 +38,21 @@ $(document).on("blur", ".todo_item",
     $(".remove_button" + this.id).removeClass("btn-lg");
     $(".input-group-btn" + this.id).removeClass("input-group-btn");
     paragraph.select();
+    var csrf = document.querySelector("meta[name=csrf]").content;
+
+    $.ajax({
+        url: "/edit/" + this.id,
+        type: "put",
+        data: {
+          todolistitem: { text: $(this).val() }
+        },
+        headers: {
+            "X-CSRF-TOKEN": csrf
+        },
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+        }
+    });
   }
 );

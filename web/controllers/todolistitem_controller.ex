@@ -33,9 +33,9 @@ defmodule Todoapp.TodolistitemController do
       {:ok, _todolistitem} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
-        |> redirect(to: "/")
-      {:error, changeset} ->
-        render(conn, "edit.html", [todolistitem: todolistitem, changeset: changeset, title: "Edit"])
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Item failed to update.")
     end
   end
 
