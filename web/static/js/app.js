@@ -20,20 +20,23 @@ import "phoenix_html"
 
 // import socket from "./socket"
 $(document).on("click", ".todo_item",
+
   function() {
-    var input = $("<input>", {val: $(this).text(), type: "text", id: this.id, class: "todo_item_input"});
+    var input = $("<input>", {val: $(this).text(), type: "text", id: this.id, class: "todo_item form-control input-lg"});
     $(this).replaceWith(input);
-    $(".todo_item_btn"+this.id).addClass("todo_item_btn_show");
+    $(".remove_button" + this.id).addClass("btn-lg");
+    $(".input-group-btn" + this.id).addClass("input-group-btn");
     input.select();
   }
 );
 
-$(document).on("blur", ".todo_item_input",
+$(document).on("blur", ".todo_item",
   function() {
     var paragraph = $("<p>", {id: this.id, class: "todo_item"});
     paragraph.text($(this).val());
     $(this).replaceWith(paragraph);
-    $(".todo_item_btn"+this.id).removeClass("todo_item_btn_show");
+    $(".remove_button" + this.id).removeClass("btn-lg");
+    $(".input-group-btn" + this.id).removeClass("input-group-btn");
     paragraph.select();
   }
 );

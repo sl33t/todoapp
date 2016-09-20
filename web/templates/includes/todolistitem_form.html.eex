@@ -8,7 +8,7 @@
   <div class="input-group">
     <%= text_input f, :text, class: "form-control input-lg", placeholder: "New todo list item" %>
     <span class="input-group-btn">
-      <%= submit "Submit", class: "btn btn-lg btn-primary" %>
+      <%= submit "Add", class: "btn btn-lg btn-primary" %>
     </span>
     <%= error_tag f, :text %>
   </div>
