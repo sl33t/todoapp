@@ -8,14 +8,14 @@ defmodule Todoapp.TodolistitemController do
     changeset = Todolistitem.changeset(%Todolistitem{}, todolistitem_params)
 
     case Repo.insert(changeset) do
-      {:ok, _todolistitem} ->
+      {:ok, todolistitem} ->
         conn
         |> put_flash(:info, "Item created successfully.")
-        |> redirect(to: "/")
+        json(conn, %{id: todolistitem.id, text: todolistitem.text})
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Item failed to create")
-        |> redirect(to: "/")
+        json(conn, :error)
     end
   end
 

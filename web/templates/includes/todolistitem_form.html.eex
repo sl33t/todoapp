@@ -6,9 +6,9 @@
   <% end %>
 
   <div class="input-group">
-    <%= text_input f, :text, class: "form-control input-lg", placeholder: "New todo list item" %>
+    <%= text_input f, :text, class: "form-control input-lg create_input", placeholder: "New todo list item" %>
     <span class="input-group-btn">
-      <%= submit "Add", class: "btn btn-lg btn-primary" %>
+      <button class="btn btn-lg btn-primary create" type="button">Add</button>
     </span>
     <%= error_tag f, :text %>
   </div>

@@ -2,11 +2,13 @@
   <%= render Todoapp.IncludesView, "todolistitem_form.html", changeset: @todo_list_changeset,
                           action: "/create"  %>
 </div>
-<%= for todo_item <- @todo_list do %>
-  <div class="col-xs-12 input-group">
-    <p class="todo_item" id="<%= todo_item.id %>"><%= todo_item.text %></p>
-    <span class="input-group-btn<%= todo_item.id %>">
-      <button role="button" class="btn btn-danger remove_button remove_button<%= todo_item.id %>">Remove</button>
-    </span>
-  </div>
-<% end %>
+<div class="todo_items">
+  <%= for todo_item <- @todo_list do %>
+    <div class="col-xs-12 input-group">
+      <p class="todo_item" id="<%= todo_item.id %>"><%= todo_item.text %></p>
+      <span class="input-group-btn<%= todo_item.id %>">
+        <button role="button" class="btn btn-danger remove_button remove_button<%= todo_item.id %>">Remove</button>
+      </span>
+    </div>
+  <% end %>
+</div>

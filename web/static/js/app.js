@@ -22,6 +22,37 @@ import "phoenix_html"
 
 var csrf = document.querySelector("meta[name=csrf]").content;
 
+$(document).on("click", ".create",
+  function(){
+    $.ajax({
+        url: "/create",
+        type: "post",
+        data: {
+          todolistitem: { text: $(this).parent("span").prev("input").val() }
+        },
+        headers: {
+            "X-CSRF-TOKEN": csrf
+        },
+        dataType: "json"
+    }).done(
+      function(todo_item) {
+        $(".create_input").val("");
+        var div = $("<div>", {class: "col-xs-12 input-group"});
+        div.append(
+          $("<p>", {class: "todo_item", id: todo_item.id, text: todo_item.text})
+        );
+        var span = $("<span>", {class: "input-group-btn" + todo_item.id});
+        var button = $("<button>", {text: "Remove", type: "button", class: "btn btn-danger remove_button remove_button" + todo_item.id});
+        span.append(button);
+        div.append(span);
+        console.log(button);
+        console.log(span);
+        $(".todo_items").append(div);
+      }
+    );
+  }
+);
+
 $(document).on("click", ".remove_button",
   function(){
     $.ajax({
