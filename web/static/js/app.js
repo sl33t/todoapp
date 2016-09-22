@@ -19,6 +19,23 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+var csrf = document.querySelector("meta[name=csrf]").content;
+
+$(document).on("click", ".remove_button",
+  function(){
+    $.ajax({
+        url: "/delete/" + $(this).parent("span").prev("p").attr("id"),
+        type: "delete",
+        headers: {
+            "X-CSRF-TOKEN": csrf
+        },
+        dataType: "json"
+    });
+    $(this).parent("span").parent("div").remove();
+  }
+);
+
 $(document).on("click", ".todo_item",
 
   function() {
@@ -38,7 +55,6 @@ $(document).on("blur", ".todo_item",
     $(".remove_button" + this.id).removeClass("btn-lg");
     $(".input-group-btn" + this.id).removeClass("input-group-btn");
     paragraph.select();
-    var csrf = document.querySelector("meta[name=csrf]").content;
 
     $.ajax({
         url: "/edit/" + this.id,

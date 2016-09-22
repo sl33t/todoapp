@@ -44,6 +44,6 @@ defmodule Todoapp.TodolistitemController do
 
     conn
     |> put_flash(:info, "Item deleted successfully.")
-    |> redirect(to: "/")
+    json(conn, :ok)
   end
 end
