@@ -22,32 +22,49 @@ import "phoenix_html"
 
 var csrf = document.querySelector("meta[name=csrf]").content;
 
-$(document).on("click", ".create",
-  function(){
+function flash_messages(type, message){
+  if ($(".alert")[0]){
+    var alert = $(".alert");
+    alert.attr('class',
+           function(i, c){
+              return c.replace(/(^|\s)alert-\S+/g, ' alert-' + type);
+           });
+    alert.text(message);
+  }
+  else {
+     var paragraph = $("<p>", {class: "alert alert-" + type, text: message});
+     $("header").append(paragraph);
+  }
+}
+
+$(document).on("submit", ".new_todo_form",
+  function(event){
+    event.preventDefault();
     $.ajax({
         url: "/create",
         type: "post",
         data: {
-          todolistitem: { text: $(this).parent("span").prev("input").val() }
+          todolistitem: { text: $(".create_input").val() }
         },
         headers: {
             "X-CSRF-TOKEN": csrf
         },
         dataType: "json"
     }).done(
-      function(todo_item) {
-        $(".create_input").val("");
-        var div = $("<div>", {class: "col-xs-12 input-group"});
-        div.append(
-          $("<p>", {class: "todo_item", id: todo_item.id, text: todo_item.text})
-        );
-        var span = $("<span>", {class: "input-group-btn" + todo_item.id});
-        var button = $("<button>", {text: "Remove", type: "button", class: "btn btn-danger remove_button remove_button" + todo_item.id});
-        span.append(button);
-        div.append(span);
-        console.log(button);
-        console.log(span);
-        $(".todo_items").append(div);
+      function(data){
+        if (data.state){
+          $(".create_input").val("");
+          var div = $("<div>", {class: "col-xs-12 input-group"});
+          div.append(
+            $("<p>", {class: "todo_item", id: data.id, text: data.text})
+          );
+          var span = $("<span>", {class: "input-group-btn" + data.id});
+          var button = $("<button>", {text: "Remove", type: "button", class: "btn btn-danger remove_button remove_button" + data.id});
+          span.append(button);
+          div.append(span);
+          $(".todo_items").append(div);
+        }
+        flash_messages(data.flash_type, data.flash_message);
       }
     );
   }
@@ -55,6 +72,7 @@ $(document).on("click", ".create",
 
 $(document).on("click", ".remove_button",
   function(){
+    var button = this;
     $.ajax({
         url: "/delete/" + $(this).parent("span").prev("p").attr("id"),
         type: "delete",
@@ -62,8 +80,14 @@ $(document).on("click", ".remove_button",
             "X-CSRF-TOKEN": csrf
         },
         dataType: "json"
-    });
-    $(this).parent("span").parent("div").remove();
+    }).done(
+      function(data){
+        if(data.state){
+          $(button).parent("span").parent("div").remove();
+        }
+        flash_messages(data.flash_type, data.flash_message);
+      }
+    );
   }
 );
 
@@ -97,6 +121,11 @@ $(document).on("blur", ".todo_item",
             "X-CSRF-TOKEN": csrf
         },
         dataType: "json"
-    });
+    }).done(
+      function(data){
+
+        flash_messages(data.flash_type, data.flash_message);
+      }
+    );
   }
 );

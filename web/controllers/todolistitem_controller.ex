@@ -9,13 +9,9 @@ defmodule Todoapp.TodolistitemController do
 
     case Repo.insert(changeset) do
       {:ok, todolistitem} ->
-        conn
-        |> put_flash(:info, "Item created successfully.")
-        json(conn, %{id: todolistitem.id, text: todolistitem.text})
+        json(conn, %{id: todolistitem.id, text: todolistitem.text, flash_type: "info", flash_message: "Item created successfully.", state: true})
       {:error, _changeset} ->
-        conn
-        |> put_flash(:error, "Item failed to create")
-        json(conn, :error)
+        json(conn, %{flash_type: "danger", flash_message: "Item failed to create.", state: false})
     end
   end
 
@@ -25,13 +21,9 @@ defmodule Todoapp.TodolistitemController do
 
     case Repo.update(changeset) do
       {:ok, _todolistitem} ->
-        conn
-        |> put_flash(:info, "Item updated successfully.")
-        json(conn, :ok)
+        json(conn, %{flash_type: "info", flash_message: "Item updated successfully.", state: true})
       {:error, _changeset} ->
-        conn
-        |> put_flash(:error, "Item failed to update.")
-        json(conn, :error)
+        json(conn, %{flash_type: "danger", flash_message: "Item failed to update.", state: false})
     end
   end
 
@@ -42,8 +34,6 @@ defmodule Todoapp.TodolistitemController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(todolistitem)
 
-    conn
-    |> put_flash(:info, "Item deleted successfully.")
-    json(conn, :ok)
+    json(conn, %{flash_type: "info", flash_message: "Item deleted successfully.", state: true})
   end
 end
