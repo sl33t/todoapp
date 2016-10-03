@@ -14,7 +14,7 @@ defmodule Todoapp.AuthController do
     case User.find_or_create(auth) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Successfully authenticated." <> user.name)
+        |> put_flash(:info, "Successfully authenticated. " <> user.email)
         |> redirect(to: "/")
       {:error, reason} ->
         conn
