@@ -41,7 +41,7 @@ $(document).on("submit", ".new_todo_form",
   function(event){
     event.preventDefault();
     $.ajax({
-        url: "/create",
+        url: "/api/create",
         type: "post",
         data: {
           todolistitem: { text: $(".create_input").val() }
@@ -74,7 +74,7 @@ $(document).on("click", ".remove_button",
   function(){
     var button = this;
     $.ajax({
-        url: "/delete/" + $(this).parent("span").prev("p").attr("id"),
+        url: "/api/delete/" + $(this).parent("span").prev("p").attr("id"),
         type: "delete",
         headers: {
             "X-CSRF-TOKEN": csrf
@@ -112,7 +112,7 @@ $(document).on("blur", ".todo_item",
     paragraph.select();
 
     $.ajax({
-        url: "/edit/" + this.id,
+        url: "/api/edit/" + this.id,
         type: "put",
         data: {
           todolistitem: { text: $(this).val() }
