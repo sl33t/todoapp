@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding-top: 65px;
+  padding-top: 70px;
 }
 
 main {
@@ -24,9 +24,17 @@ footer {
   height: 5rem;
 }
 
+.navbar-title {
+  float: left;
+}
 
-.navbar, .alert {
+.navbar {
   margin-bottom: 0;
+  padding: 0 1rem;
+}
+
+.navbar-toggle {
+  margin: 2rem 0 0 0;
 }
 
 .todo_item {

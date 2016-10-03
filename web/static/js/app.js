@@ -22,6 +22,28 @@ import "phoenix_html"
 
 var csrf = document.querySelector("meta[name=csrf]").content;
 
+$(document).on("mouseout", "#google_button",
+  function(event){
+    document.getElementById("google_button").src = "/images/google/google_btn.png";
+  }
+);
+
+$(document).on("mouseover", "#google_button",
+  function(event){
+    document.getElementById("google_button").src = "/images/google/google_btn_focus.png";
+  }
+);
+
+$(document).on("mousedown", "#google_button",
+  function(event){
+    document.getElementById("google_button").src = "/images/google/google_btn_pressed.png";
+  }
+);
+
+function googleOnPress(){
+  $("#google_button").src = "/images/google/google_btn_focus.png";
+}
+
 function flash_messages(type, message){
   if ($(".alert")[0]){
     var alert = $(".alert");
