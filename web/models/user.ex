@@ -3,7 +3,9 @@ defmodule Todoapp.User do
 
   schema "users" do
     field :name, :string
-    field :password, :string
+    field :oauth_id, :string
+    field :avatar, :string
+    field :email, :string
 
     timestamps()
   end
@@ -37,7 +39,7 @@ defmodule Todoapp.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :password])
-    |> validate_required([:name, :password])
+    |> cast(params, [:name, :oauth_id, :avatar, :email])
+    |> validate_required([:name, :oauth_id, :avatar, :email])
   end
 end
