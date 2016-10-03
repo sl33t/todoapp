@@ -1,6 +1,9 @@
 defmodule Todoapp.User do
   use Todoapp.Web, :model
 
+  alias Todoapp.Repo
+  alias Todoapp.User
+
   schema "users" do
     field :name, :string
     field :oauth_id, :string
@@ -13,11 +16,22 @@ defmodule Todoapp.User do
   alias Ueberauth.Auth
 
   def find_or_create(%Auth{} = auth) do
-    {:ok, basic_info(auth)}
+    info = basic_info(auth)
+
+    case Repo.get_by(User, oauth_id: info.oauth_id) do
+      nil ->
+        new_user_changeset = User.changeset(%User{}, %{name: info.name, oauth_id: info.oauth_id, avatar: info.avatar, email: info.email})
+
+        case Repo.insert(new_user_changeset) do
+          {:ok, new_user} -> {:ok, new_user}
+          {:error, _error} -> {:error, _error}
+        end
+      user -> {:ok, user}
+    end
   end
 
   defp basic_info(auth) do
-    %{id: auth.uid, name: name_from_auth(auth), avatar: auth.info.image, email: auth.info.email }
+    %{oauth_id: auth.uid, name: name_from_auth(auth), avatar: auth.info.image, email: auth.info.email }
   end
 
   defp name_from_auth(auth) do
