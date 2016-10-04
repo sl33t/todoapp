@@ -24,7 +24,7 @@ defmodule Todoapp.User do
 
         case Repo.insert(new_user_changeset) do
           {:ok, new_user} -> {:ok, new_user}
-          {:error, _error} -> {:error, _error}
+          {:error, error} -> {:error, error}
         end
       user -> {:ok, user}
     end
