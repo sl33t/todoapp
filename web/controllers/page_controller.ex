@@ -7,8 +7,9 @@ defmodule Todoapp.PageController do
   def index(conn, _params) do
     conn |> render("index.html", [
       title: "Homepage",
-       todo_list: Repo.all(Todolistitem),
-        todo_list_changeset: Todolistitem.changeset(%Todolistitem{})
+      todo_list: Repo.all(Todolistitem),
+      todo_list_changeset: Todolistitem.changeset(%Todolistitem{}),
+      current_user: Guardian.Plug.current_resource(conn)
         ]
       )
   end

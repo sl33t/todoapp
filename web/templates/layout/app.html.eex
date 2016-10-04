@@ -29,13 +29,15 @@
           </div>
 
           <div class="collapse navbar-collapse" id="navDropDown">
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="/auth/google" class="navbar-right navbar-brand">
-                  <img id="google_button" src="/images/google/google_btn.png" alt="Google Sign in Button" />
-                </a>
-              </li>
-            </ul>
+            <%= if @current_user do %>
+              <form method="get" class="navbar-form navbar-right" action="/auth/logout">
+                <button id="logout" type="submit" class="navbar-btn btn btn-info" >Logout</button>
+              </form>
+            <% else %>
+              <a href="/auth/google" class="navbar-right navbar-brand">
+                <img id="google_button" src="/images/google/google_btn.png" alt="Google Sign in Button" />
+              </a>
+            <% end %>
           </div>
         </div>
       </nav>
