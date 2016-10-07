@@ -3,12 +3,15 @@ defmodule Todoapp.User do
 
   alias Todoapp.Repo
   alias Todoapp.User
+  alias Todoapp.Todolistitem
 
   schema "users" do
     field :name, :string
     field :oauth_id, :string
     field :avatar, :string
     field :email, :string
+
+    has_many :todolistitems, Todolistitem
 
     timestamps()
   end
