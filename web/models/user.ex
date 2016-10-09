@@ -34,7 +34,14 @@ defmodule Todoapp.User do
   end
 
   defp basic_info(auth) do
-    %{oauth_id: auth.uid, name: name_from_auth(auth), avatar: auth.info.image, email: auth.info.email }
+    name = name_from_auth(auth)
+    case name do
+      "" ->
+        %{oauth_id: auth.uid, name: auth.info.email, avatar: auth.info.image, email: auth.info.email }
+      name ->
+        %{oauth_id: auth.uid, name: name, avatar: auth.info.image, email: auth.info.email }
+    end
+
   end
 
   defp name_from_auth(auth) do
