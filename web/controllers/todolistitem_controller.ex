@@ -5,12 +5,15 @@ defmodule Todoapp.TodolistitemController do
 
 
   def create(conn, %{"todolistitem" => todolistitem_params}) do
-    changeset = Todolistitem.changeset(%Todolistitem{}, todolistitem_params)
+    current_user = Guardian.Plug.current_resource(conn)
+    current_user = Repo.preload(current_user, :todolistitems)
+    changeset = current_user |> build_assoc(:todolistitems) |> Todolistitem.changeset(todolistitem_params)
 
     case Repo.insert(changeset) do
       {:ok, todolistitem} ->
         json(conn, %{id: todolistitem.id, text: todolistitem.text, flash_type: "info", flash_message: "Item created successfully.", state: true})
-      {:error, _changeset} ->
+      {:error, changeset} ->
+        IO.puts(changeset)
         json(conn, %{flash_type: "danger", flash_message: "Item failed to create.", state: false})
     end
   end

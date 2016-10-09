@@ -17,7 +17,6 @@ defmodule Todoapp.Todolistitem do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:text])
-    |> cast_assoc(:user, required: true)
-    |> validate_required([:text, :user])
+    |> validate_required([:text])
   end
 end
