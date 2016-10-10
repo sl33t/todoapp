@@ -14,12 +14,11 @@ defmodule Todoapp.PageController do
           ]
         )
       user ->
-        user = Repo.preload(user, :todolistitems)
+        user = Repo.preload(user, todolistitems: from(todolistitems in Todolistitem, order_by: :order_by))
         conn |> render("index.html", [
         title: "Homepage",
         todo_list_changeset: Todolistitem.changeset(%Todolistitem{}),
-        current_user: user,
-        todolistitems: Repo.all(from(todolistitems in Todolistitem, order_by: :order_by))
+        current_user: user
           ]
         )
     end

@@ -37,7 +37,9 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
-    todolistitem = Repo.get!(Todolistitem, id)
+    current_user = Guardian.Plug.current_resource(conn)
+    current_user = Repo.preload(current_user, todolistitems: from(todolistitem in Todolistitem, where: todolistitem.id == ^id))
+    todolistitem = List.first(current_user.todolistitems)
     changeset = Todolistitem.changeset(todolistitem, todolistitem_params)
 
     case Repo.update(changeset) do

@@ -3,7 +3,7 @@
                           action: "/create"  %>
 </div>
 <div class="todo_items" id="main_list">
-  <%= for todo_item <- @todolistitems do %>
+  <%= for todo_item <- @current_user.todolistitems do %>
     <div class="col-xs-12 input-group" id="<%= todo_item.id %>">
       <p class="todo_item"><%= todo_item.text %></p>
       <span class="input-group-btn<%= todo_item.id %>">
