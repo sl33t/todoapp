@@ -59,6 +59,10 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
-    json(conn, %{flash_type: "info", flash_message: serializedListOfTodoItems, state: true})
+    Enum.reduce(serializedListOfTodoItems, 0, fn(item, count) ->
+      from(todoitem in Todolistitem, where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
+      count + 1
+    end)
+    json(conn, %{flash_type: "info", flash_message: "List order has been updated.", state: true})
   end
 end

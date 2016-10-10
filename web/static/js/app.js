@@ -76,9 +76,9 @@ $(document).on("submit", ".new_todo_form",
       function(data){
         if (data.state){
           $(".create_input").val("");
-          var div = $("<div>", {class: "col-xs-12 input-group"});
+          var div = $("<div>", {class: "col-xs-12 input-group", id: data.id});
           div.append(
-            $("<p>", {class: "todo_item", id: data.id, text: data.text})
+            $("<p>", {class: "todo_item", text: data.text})
           );
           var span = $("<span>", {class: "input-group-btn" + data.id});
           var button = $("<button>", {text: "Remove", type: "button", class: "btn btn-danger remove_button remove_button" + data.id});
@@ -96,7 +96,7 @@ $(document).on("click", ".remove_button",
   function(){
     var button = this;
     $.ajax({
-        url: "/api/delete/" + $(this).parent("span").prev("p").attr("id"),
+        url: "/api/delete/" + $(this).parent("span").parent("div").attr("id"),
         type: "delete",
         headers: {
             "X-CSRF-TOKEN": csrf
@@ -116,25 +116,26 @@ $(document).on("click", ".remove_button",
 $(document).on("click", ".todo_item",
 
   function() {
-    var input = $("<input>", {val: $(this).text(), type: "text", id: this.id, class: "todo_item form-control input-lg"});
+    var input = $("<input>", {val: $(this).text(), type: "text", id: $(this).parent("div").attr("id"), class: "todo_item form-control input-lg"});
     $(this).replaceWith(input);
-    $(".remove_button" + this.id).addClass("btn-lg");
-    $(".input-group-btn" + this.id).addClass("input-group-btn");
+    $(".remove_button" + $(this).parent("div").attr("id")).addClass("btn-lg");
+    $(".input-group-btn" + $(this).parent("div").attr("id")).addClass("input-group-btn");
     input.select();
   }
 );
 
 $(document).on("blur", ".todo_item",
   function() {
-    var paragraph = $("<p>", {id: this.id, class: "todo_item"});
+    var paragraph = $("<p>", {id: $(this).parent("div").attr("id"), class: "todo_item"});
     paragraph.text($(this).val());
+    var parentDiv = $(this).parent("div");
     $(this).replaceWith(paragraph);
-    $(".remove_button" + this.id).removeClass("btn-lg");
-    $(".input-group-btn" + this.id).removeClass("input-group-btn");
+    $(".remove_button" + $(this).parent("div").attr("id")).removeClass("btn-lg");
+    $(".input-group-btn" + $(this).parent("div").attr("id")).removeClass("input-group-btn");
     paragraph.select();
-
+    console.log($(this));
     $.ajax({
-        url: "/api/edit/" + this.id,
+        url: "/api/edit/" + parentDiv.attr("id"),
         type: "put",
         data: {
           todolistitem: { text: $(this).val() }
@@ -154,10 +155,7 @@ $(document).on("blur", ".todo_item",
 
 $("#main_list").sortable({
     update: function(event, ui) {
-      var data = $(this).sortable('serialize', {key: "todoitem"});
-
-      alert(data);
-      // POST to server using $.post or $.ajax
+      var data = $(this).sortable('toArray');
       $.ajax({
           type: 'POST',
           url: '/api/reorder',
