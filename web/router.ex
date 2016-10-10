@@ -27,6 +27,7 @@ defmodule Todoapp.Router do
     post "/create", TodolistitemController, :create
     put "/edit/:id", TodolistitemController, :update
     delete "/delete/:id", TodolistitemController, :delete
+    get "/reorder/:id_one/:id_two", TodolistitemController, :reorder
   end
 
   scope "/auth", Todoapp do
