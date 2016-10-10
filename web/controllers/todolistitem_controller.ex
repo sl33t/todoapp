@@ -58,15 +58,7 @@ defmodule Todoapp.TodolistitemController do
     json(conn, %{flash_type: "info", flash_message: "Item deleted successfully.", state: true})
   end
 
-  def reorder(conn, %{"id_one" => id_one, "id_two" => id_two}) do
-    todolistitem_one = Repo.get_by!(Todolistitem, order_by: id_one)
-    swap = todolistitem_one.order_by
-    todolistitem_two = Repo.get_by!(Todolistitem, order_by: id_two)
-    todolistitem_one = Ecto.Changeset.change todolistitem_one, order_by: todolistitem_two.order_by
-    todolistitem_two = Ecto.Changeset.change todolistitem_two, order_by: swap
-
-    Repo.update!(todolistitem_one)
-    Repo.update!(todolistitem_two)
-    json(conn, %{flash_type: "info", flash_message: "Items reordered successfully.", state: true})
+  def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
+    json(conn, %{flash_type: "info", flash_message: serializedListOfTodoItems, state: true})
   end
 end

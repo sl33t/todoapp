@@ -151,3 +151,28 @@ $(document).on("blur", ".todo_item",
     );
   }
 );
+
+$("#main_list").sortable({
+    update: function(event, ui) {
+      var data = $(this).sortable('serialize', {key: "todoitem"});
+
+      alert(data);
+      // POST to server using $.post or $.ajax
+      $.ajax({
+          type: 'POST',
+          url: '/api/reorder',
+          data: {
+            serializedListOfTodoItems: data
+          },
+          headers: {
+              "X-CSRF-TOKEN": csrf
+          },
+          dataType: "json"
+      }).done(
+        function(data){
+
+          flash_messages(data.flash_type, data.flash_message);
+        }
+      );
+    }
+})
