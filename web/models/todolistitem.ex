@@ -5,6 +5,7 @@ defmodule Todoapp.Todolistitem do
 
   schema "todolistitems" do
     field :text, :string
+    field :order_by, :integer
 
     belongs_to :user, User
 
@@ -16,7 +17,7 @@ defmodule Todoapp.Todolistitem do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:text])
-    |> validate_required([:text])
+    |> cast(params, [:text, :order_by])
+    |> validate_required([:text, :order_by])
   end
 end

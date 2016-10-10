@@ -18,7 +18,8 @@ defmodule Todoapp.PageController do
         conn |> render("index.html", [
         title: "Homepage",
         todo_list_changeset: Todolistitem.changeset(%Todolistitem{}),
-        current_user: user
+        current_user: user,
+        todolistitems: Repo.all(from(todolistitems in Todolistitem, order_by: :order_by))
           ]
         )
     end
