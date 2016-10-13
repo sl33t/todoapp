@@ -51,7 +51,9 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def delete(conn, %{"id" => id}) do
-    todolistitem = Repo.get!(Todolistitem, id)
+    current_user = Guardian.Plug.current_resource(conn)
+    current_user = Repo.preload(current_user, todolistitems: from(todolistitem in Todolistitem, where: todolistitem.id == ^id))
+    todolistitem = List.first(current_user.todolistitems)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
