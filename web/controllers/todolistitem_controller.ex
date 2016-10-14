@@ -31,7 +31,8 @@ defmodule Todoapp.TodolistitemController do
         json(conn, %{
           flash_type: "danger",
           flash_message: "Item failed to create.",
-          state: false
+          state: false,
+          changeset: changeset
         })
     end
   end
@@ -63,8 +64,9 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
+    current_user = Guardian.Plug.current_resource(conn)
     Enum.reduce(serializedListOfTodoItems, 0, fn(item, count) ->
-      from(todoitem in Todolistitem, where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
+      from(todoitem in assoc(current_user, :todolistitems), where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
       count + 1
     end)
     json(conn, %{flash_type: "info", flash_message: "List order has been updated.", state: true})
