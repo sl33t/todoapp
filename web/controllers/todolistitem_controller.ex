@@ -9,12 +9,13 @@ defmodule Todoapp.TodolistitemController do
     current_user = Guardian.Plug.current_resource(conn)
     current_user = Repo.preload(current_user, :todolistitems)
     max_id = Repo.one(from(todolistitems in Todolistitem, select: max(todolistitems.order_by)))
-    case max_id do
-      nil ->
-        max_id = 0
-      num ->
-        max_id = num
-    end
+    max_id =
+      case max_id do
+        nil ->
+          0
+        num ->
+          num
+      end
     todolistitem_params = Map.put(todolistitem_params, "order_by", max_id + 1)
     changeset = current_user |> build_assoc(:todolistitems) |> Todolistitem.changeset(todolistitem_params)
 
