@@ -3,7 +3,7 @@ defmodule Todoapp.TodolistitemTest do
 
   alias Todoapp.Todolistitem
 
-  @valid_attrs %{text: "some content"}
+  @valid_attrs %{text: "some content", order_by: 0}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
