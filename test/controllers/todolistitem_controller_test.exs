@@ -5,9 +5,13 @@ defmodule Todoapp.TodolistitemControllerTest do
   @valid_attrs %{text: "some content"}
   @invalid_attrs %{}
 
+  def assert_contains(search_text, target) do
+    assert String.contains?(search_text, target), ~s(Expected #{inspect search_text} to contain target)
+  end
+
   test "lists all entries on index", %{conn: conn} do
-    conn = get conn, todolistitem_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing todolistitems"
+    conn = get conn, "/"
+    assert_contains html_response(conn, 200), "Homepage"
   end
 
   test "renders form for new resources", %{conn: conn} do
