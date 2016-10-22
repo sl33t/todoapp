@@ -28,12 +28,11 @@ defmodule Todoapp.TodolistitemController do
           flash_message: "Item created successfully.",
           state: true
         })
-      {:error, changeset} ->
+      {:error, _changeset} ->
         json(conn, %{
           flash_type: "danger",
           flash_message: "Item failed to create.",
-          state: false,
-          changeset: changeset
+          state: false
         })
     end
   end
