@@ -25,24 +25,6 @@ defmodule Todoapp.TodolistitemControllerTest do
     assert html_response(conn, 200) =~ "New todolistitem"
   end
 
-  test "shows chosen resource", %{conn: conn} do
-    todolistitem = Repo.insert! %Todolistitem{}
-    conn = get conn, todolistitem_path(conn, :show, todolistitem)
-    assert html_response(conn, 200) =~ "Show todolistitem"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, todolistitem_path(conn, :show, -1)
-    end
-  end
-
-  test "renders form for editing chosen resource", %{conn: conn} do
-    todolistitem = Repo.insert! %Todolistitem{}
-    conn = get conn, todolistitem_path(conn, :edit, todolistitem)
-    assert html_response(conn, 200) =~ "Edit todolistitem"
-  end
-
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     todolistitem = Repo.insert! %Todolistitem{}
     conn = put conn, todolistitem_path(conn, :update, todolistitem), todolistitem: @valid_attrs
