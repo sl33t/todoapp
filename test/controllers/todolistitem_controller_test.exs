@@ -25,7 +25,7 @@ defmodule Todoapp.TodolistitemControllerTest do
     :ok
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
+  test "creates resource", %{conn: conn} do
     user = Repo.get_by(User, name: "name")
     conn = guardian_login(user)
     |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs)
@@ -37,7 +37,7 @@ defmodule Todoapp.TodolistitemControllerTest do
     user = Repo.get_by(User, name: "name")
     conn = guardian_login(user)
     |> post(todolistitem_path(conn, :create), todolistitem: @invalid_attrs)
-    assert_contains json_response(conn, 200)["flash_message"], "Item created successfully."
+    assert_contains json_response(conn, 200)["flash_message"], "Item failed to create."
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
