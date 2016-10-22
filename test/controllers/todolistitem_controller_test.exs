@@ -17,7 +17,7 @@ defmodule Todoapp.TodolistitemControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, todolistitem_path(conn, :create), todolistitem: @invalid_attrs
-    assert html_response(conn, 200) =~ "New todolistitem"
+    assert_contains html_response(conn, 200), "Item failed to create."
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
@@ -30,7 +30,7 @@ defmodule Todoapp.TodolistitemControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     todolistitem = Repo.insert! %Todolistitem{}
     conn = put conn, todolistitem_path(conn, :update, todolistitem), todolistitem: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit todolistitem"
+    assert_contains html_response(conn, 200), "Item failed to update."
   end
 
   test "deletes chosen resource", %{conn: conn} do
