@@ -6,7 +6,7 @@ defmodule Todoapp.TodolistitemControllerTest do
   alias Todoapp.Repo
   @valid_attrs %{text: "some content"}
   @valid_attrs2 %{text: "some content2"}
-  @invalid_attrs %{}
+  @invalid_attrs %{text: nil}
 
   def assert_contains(search_text, target) do
     assert String.contains?(search_text, target), ~s(Expected #{inspect search_text} to contain #{inspect target})
