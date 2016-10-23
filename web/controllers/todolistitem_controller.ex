@@ -65,7 +65,7 @@ defmodule Todoapp.TodolistitemController do
 
   def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
     current_user = Guardian.Plug.current_resource(conn)
-    Enum.reduce(serializedListOfTodoItems, 0, fn(item, count) ->
+    Enum.reduce(serializedListOfTodoItems, 1, fn(item, count) ->
       from(todoitem in assoc(current_user, :todolistitems), where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
       count + 1
     end)
