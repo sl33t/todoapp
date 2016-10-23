@@ -5,6 +5,7 @@ defmodule Todoapp.TodolistitemControllerTest do
   alias Todoapp.User
   alias Todoapp.Repo
   @valid_attrs %{text: "some content"}
+  @valid_attrs2 %{text: "some content2"}
   @invalid_attrs %{}
 
   def assert_contains(search_text, target) do
@@ -21,7 +22,7 @@ defmodule Todoapp.TodolistitemControllerTest do
   end
 
   setup do
-    user = Repo.insert!(%User{name: "name", oauth_id: "id", avatar: "avatar", email: "email@email.com"})
+    Repo.insert!(%User{name: "name", oauth_id: "id", avatar: "avatar", email: "email@email.com"})
     :ok
   end
 
@@ -40,11 +41,16 @@ defmodule Todoapp.TodolistitemControllerTest do
     assert_contains json_response(conn, 200)["flash_message"], "Item failed to create."
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    todolistitem = Repo.insert! %Todolistitem{}
-    conn = put conn, todolistitem_path(conn, :update, todolistitem), todolistitem: @valid_attrs
-    assert redirected_to(conn) == todolistitem_path(conn, :show, todolistitem)
-    assert Repo.get_by(Todolistitem, @valid_attrs)
+  test "updates chosen resource and success", %{conn: conn} do
+    user = Repo.get_by(User, name: "name")
+    conn = guardian_login(user)
+    |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs)
+
+    user = Repo.preload(user, todolistitems: from(todolistitem in Todolistitem))
+    todolistitem = List.first(user.todolistitems)
+    conn = guardian_login(user)
+    |> put(todolistitem_path(conn, :update, todolistitem), todolistitem: @valid_attrs2)
+    assert Repo.get_by(Todolistitem, @valid_attrs2)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
