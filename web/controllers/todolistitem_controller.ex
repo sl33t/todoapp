@@ -39,8 +39,7 @@ defmodule Todoapp.TodolistitemController do
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
     current_user = Guardian.Plug.current_resource(conn)
-    current_user = Repo.preload(current_user, todolistitems: from(todolistitem in Todolistitem, where: todolistitem.id == ^id))
-    todolistitem = List.first(current_user.todolistitems)
+    todolistitem = assoc(current_user, :todolistitems) |> Repo.get(id)
     changeset = Todolistitem.changeset(todolistitem, todolistitem_params)
 
     case Repo.update(changeset) do
@@ -53,11 +52,8 @@ defmodule Todoapp.TodolistitemController do
 
   def delete(conn, %{"id" => id}) do
     current_user = Guardian.Plug.current_resource(conn)
-    current_user = Repo.preload(current_user, todolistitems: from(todolistitem in Todolistitem, where: todolistitem.id == ^id))
-    todolistitem = List.first(current_user.todolistitems)
+    todolistitem = assoc(current_user, :todolistitems) |> Repo.get(id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(todolistitem)
 
     json(conn, %{flash_type: "info", flash_message: "Item deleted successfully.", state: true})
