@@ -6,8 +6,9 @@ defmodule Todoapp.TodolistitemController do
 
 
   def create(conn, %{"todolistitem" => todolistitem_params}) do
-    current_user = Guardian.Plug.current_resource(conn)
-    current_user = Repo.preload(current_user, :todolistitems)
+    current_user = conn
+    |> Guardian.Plug.current_resource
+    |> Repo.preload(:todolistitems)
     max_id = Repo.one(from(todolistitems in Todolistitem, select: max(todolistitems.order_by)))
     max_id =
       case max_id do
@@ -38,11 +39,14 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
-    current_user = Guardian.Plug.current_resource(conn)
-    todolistitem = assoc(current_user, :todolistitems) |> Repo.get(id)
-    changeset = Todolistitem.changeset(todolistitem, todolistitem_params)
+    result = conn
+    |> Guardian.Plug.current_resource
+    |> assoc(:todolistitems)
+    |> Repo.get(id)
+    |> Todolistitem.changeset(todolistitem_params)
+    |> Repo.update
 
-    case Repo.update(changeset) do
+    case result do
       {:ok, _todolistitem} ->
         json(conn, %{flash_type: "info", flash_message: "Item updated successfully.", state: true})
       {:error, _changeset} ->
@@ -51,8 +55,10 @@ defmodule Todoapp.TodolistitemController do
   end
 
   def delete(conn, %{"id" => id}) do
-    current_user = Guardian.Plug.current_resource(conn)
-    todolistitem = assoc(current_user, :todolistitems) |> Repo.get(id)
+    todolistitem = conn
+    |> Guardian.Plug.current_resource
+    |> assoc(:todolistitems)
+    |> Repo.get(id)
 
     Repo.delete!(todolistitem)
 
