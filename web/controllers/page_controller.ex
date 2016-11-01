@@ -9,14 +9,12 @@ defmodule Todoapp.PageController do
     case current_user do
       nil ->
         conn |> render("landing.html", [
-        title: "Homepage",
         current_user: nil
           ]
         )
       user ->
         user = Repo.preload(user, todolistitems: from(todolistitems in Todolistitem, order_by: :order_by))
         conn |> render("index.html", [
-        title: "Homepage",
         todo_list_changeset: Todolistitem.changeset(%Todolistitem{}),
         current_user: user
           ]
