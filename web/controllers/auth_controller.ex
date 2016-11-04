@@ -6,7 +6,6 @@ defmodule Todoapp.AuthController do
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
-    |> put_flash(:error, "Authentication denied.")
     |> redirect(to: "/")
   end
 
@@ -14,7 +13,6 @@ defmodule Todoapp.AuthController do
     case User.find_or_create(auth) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Successfully authenticated. " <> user.email)
         |> Guardian.Plug.sign_in(user)
         |> redirect(to: "/")
       {:error, reason} ->
@@ -26,7 +24,6 @@ defmodule Todoapp.AuthController do
 
   def delete(conn, _params) do
     Guardian.Plug.sign_out(conn)
-    |> put_flash(:info, "You have been logged out.")
     |> redirect(to: "/")
   end
 end

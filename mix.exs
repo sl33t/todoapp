@@ -30,18 +30,18 @@ defmodule Todoapp.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
-     {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.0"},
+    [{:phoenix, ">= 0.0.0"},
+     {:phoenix_pubsub, ">= 0.0.0"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.6"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"},
-     {:ueberauth, "~> 0.4"},
-     {:ueberauth_github, "~> 0.4"},
-     {:ueberauth_google, "~> 0.4"},
-     {:guardian, "~> 0.13.0"}]
+     {:phoenix_html, ">= 0.0.0"},
+     {:phoenix_live_reload, ">= 0.0.0"},
+     {:phoenix_ecto, git: "git@github.com:phoenixframework/phoenix_ecto.git"},
+     {:gettext, ">= 0.0.0"},
+     {:cowboy, ">= 0.0.0"},
+     {:ueberauth, ">= 0.0.0"},
+     {:ueberauth_github, ">= 0.0.0"},
+     {:ueberauth_google, ">= 0.0.0"},
+     {:guardian, ">= 0.0.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

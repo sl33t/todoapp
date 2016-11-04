@@ -1,8 +1,8 @@
 defmodule Todoapp.Router do
   use Todoapp.Web, :router
 
-  pipeline :browser do
-    plug :accepts, ["html"]
+  pipeline :api do
+    plug :accepts, ["json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -11,19 +11,10 @@ defmodule Todoapp.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  scope "/", Todoapp do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-  end
-
   scope "/api", Todoapp do
-    pipe_through :browser
+    pipe_through :api
 
+    get "/get", TodolistitemController, :get
     post "/create", TodolistitemController, :create
     put "/edit/:id", TodolistitemController, :update
     delete "/delete/:id", TodolistitemController, :delete
@@ -31,7 +22,7 @@ defmodule Todoapp.Router do
   end
 
   scope "/auth", Todoapp do
-    pipe_through :browser
+    pipe_through :api
 
     get "/logout", AuthController, :delete
     get "/:provider", AuthController, :request

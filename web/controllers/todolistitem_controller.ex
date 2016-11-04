@@ -4,6 +4,12 @@ defmodule Todoapp.TodolistitemController do
 
   alias Todoapp.Todolistitem
 
+  def get(conn, _params) do
+    current_user = Guardian.Plug.current_resource(conn)
+    current_user = Repo.preload(current_user, :todolistitems)
+
+    render conn, "get.json", todolistitems: current_user.todolistitems
+  end
 
   def create(conn, %{"todolistitem" => todolistitem_params}) do
     current_user = conn
