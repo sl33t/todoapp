@@ -19,7 +19,7 @@ defmodule Todoapp.Mixfile do
   def application do
     [mod: {Todoapp, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :logger, :ueberauth, :ueberauth_google, :ueberauth_github]]
+                    :phoenix_ecto, :postgrex, :logger]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,9 +38,6 @@ defmodule Todoapp.Mixfile do
      {:phoenix_ecto, git: "git@github.com:phoenixframework/phoenix_ecto.git"},
      {:gettext, ">= 0.0.0"},
      {:cowboy, ">= 0.0.0"},
-     {:ueberauth, ">= 0.0.0"},
-     {:ueberauth_github, ">= 0.0.0"},
-     {:ueberauth_google, ">= 0.0.0"},
      {:guardian, ">= 0.0.0"}]
   end
 

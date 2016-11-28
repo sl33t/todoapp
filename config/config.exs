@@ -12,7 +12,7 @@ config :todoapp,
 # Configures the endpoint
 config :todoapp, Todoapp.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "0EgEh2kEVJWD1XfKgXKIwjh6afrKkvOctinNZC34kCP0jArNerPS4MhOLVFkrGWv",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   render_errors: [view: Todoapp.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Todoapp.PubSub,
            adapter: Phoenix.PubSub.PG2]
@@ -21,15 +21,6 @@ config :todoapp, Todoapp.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
-
-config :ueberauth, Ueberauth,
-  providers: [
-    google: {Ueberauth.Strategy.Google, []}
-  ]
-
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
 
 config :guardian, Guardian,
   allowed_algos: ["HS512"], # optional

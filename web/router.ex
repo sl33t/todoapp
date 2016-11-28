@@ -24,8 +24,7 @@ defmodule Todoapp.Router do
   scope "/auth", Todoapp do
     pipe_through :api
 
-    get "/logout", AuthController, :delete
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :callback
+    post "/logout", AuthController, :delete
+    post "/login", AuthController, :login
   end
 end
