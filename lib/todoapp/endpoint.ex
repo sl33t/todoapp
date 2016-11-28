@@ -39,7 +39,7 @@ defmodule Todoapp.Endpoint do
     signing_salt: "5XJygEJM"
 
 
-  plug Corsica, origins: "*"
+  plug Corsica, origins: "*", allow_headers: ["authorization"]
 
   plug Todoapp.Router
 end

@@ -3,10 +3,8 @@ defmodule Todoapp.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :fetch_session
-    plug :fetch_flash
     plug :put_secure_browser_headers
-    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
   end
 

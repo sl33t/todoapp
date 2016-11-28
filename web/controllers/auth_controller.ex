@@ -6,9 +6,11 @@ defmodule Todoapp.AuthController do
   def login(conn, %{"user" => user_params}) do
     case User.find_or_create(user_params) do
       {:ok, user} ->
+        { :ok, jwt, full_claims } = Guardian.encode_and_sign(user, :api)
         conn
-        |> Guardian.Plug.sign_in(user)
         |> json(%{
+          jwt: jwt,
+          full_claims: full_claims,
           flash_type: "info",
           flash_message: user.name <> " has been logged in."
         })
@@ -22,7 +24,7 @@ defmodule Todoapp.AuthController do
     end
   end
 
-  def delete(conn, %{"user" => user_params}) do
+  def delete(conn, _params) do
     Guardian.Plug.sign_out(conn)
     |> json(%{
       flash_type: "info",
