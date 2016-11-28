@@ -14,7 +14,7 @@ defmodule Todoapp.TodolistitemControllerTest do
 
   def guardian_login(user, token \\ :token, opts \\ []) do
     build_conn()
-      |> bypass_through(Todoapp.Router, [:browser])
+      |> bypass_through(Todoapp.Router, [:api])
       |> get("/")
       |> Guardian.Plug.sign_in(user, token, opts)
       |> send_resp(200, "Flush the session yo")
