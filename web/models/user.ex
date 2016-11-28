@@ -16,9 +16,7 @@ defmodule Todoapp.User do
     timestamps()
   end
 
-  alias Ueberauth.Auth
-
-  def find_or_create(%Auth{} = auth) do
+  def find_or_create(auth) do
     info = basic_info(auth)
 
     case Repo.get_by(User, oauth_id: info.oauth_id) do

@@ -1,6 +1,5 @@
 defmodule Todoapp.AuthController do
   use Todoapp.Web, :controller
-  plug Ueberauth
 
   alias Todoapp.User
 
