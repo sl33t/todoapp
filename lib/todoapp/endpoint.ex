@@ -38,5 +38,8 @@ defmodule Todoapp.Endpoint do
     key: "_todoapp_key",
     signing_salt: "5XJygEJM"
 
+
+  plug Corsica, origins: "*"
+
   plug Todoapp.Router
 end
