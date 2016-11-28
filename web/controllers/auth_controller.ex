@@ -3,8 +3,8 @@ defmodule Todoapp.AuthController do
 
   alias Todoapp.User
 
-  def login(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    case User.find_or_create(auth) do
+  def login(conn, %{"user" => user_params}) do
+    case User.find_or_create(user_params) do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)
@@ -16,7 +16,7 @@ defmodule Todoapp.AuthController do
     end
   end
 
-  def delete(conn, _params) do
+  def delete(conn, %{"user" => user_params}) do
     Guardian.Plug.sign_out(conn)
     |> redirect(to: "/")
   end
