@@ -17,6 +17,7 @@ defmodule Todoapp.User do
   end
 
   def find_or_create(info) do
+    info = for {key, val} <- info, into: %{}, do: {String.to_atom(key), val}
     case Repo.get_by(User, oauth_id: info.oauth_id) do
       nil ->
         new_user_changeset = User.changeset(%User{}, %{name: info.name, oauth_id: info.oauth_id, avatar: info.avatar, email: info.email})

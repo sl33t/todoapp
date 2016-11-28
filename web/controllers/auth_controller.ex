@@ -8,16 +8,25 @@ defmodule Todoapp.AuthController do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)
-        |> redirect(to: "/")
+        |> json(%{
+          flash_type: "info",
+          flash_message: user.name <> " has been logged in."
+        })
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
-        |> redirect(to: "/")
+        |> json(%{
+          flash_type: "danger",
+          flash_message: "Login failed"
+        })
     end
   end
 
   def delete(conn, %{"user" => user_params}) do
     Guardian.Plug.sign_out(conn)
-    |> redirect(to: "/")
+    |> json(%{
+      flash_type: "info",
+      flash_message: "You have been logged out."
+    })
   end
 end
