@@ -3,7 +3,7 @@ defmodule Todoapp.Todolistitem do
 
   alias Todoapp.User
 
-  @derive {Poison.Encoder, only: [:text, :order_by]}
+  @derive {Poison.Encoder, only: [:id, :text]}
   schema "todolistitems" do
     field :text, :string
     field :order_by, :integer
