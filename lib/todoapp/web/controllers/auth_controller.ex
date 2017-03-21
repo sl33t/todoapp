@@ -1,7 +1,7 @@
-defmodule Todoapp.AuthController do
+defmodule Todoapp.Web.AuthController do
   use Todoapp.Web, :controller
 
-  alias Todoapp.User
+  alias Todoapp.Web.User
 
   def login(conn, %{"user" => user_params}) do
     case User.find_or_create(user_params) do

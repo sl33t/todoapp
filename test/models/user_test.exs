@@ -1,7 +1,7 @@
-defmodule Todoapp.UserTest do
-  use Todoapp.ModelCase
+defmodule Todoapp.Web.UserTest do
+  use Todoapp.Web.ModelCase
 
-  alias Todoapp.User
+  alias Todoapp.Web.User
 
   @valid_attrs %{name: "Name", oauth_id: "1234", avatar: "Avatar", email: "Email"}
   @invalid_attrs %{}

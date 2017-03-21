@@ -1,4 +1,4 @@
-defmodule Todoapp.ChannelCase do
+defmodule Todoapp.Web.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule Todoapp.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Todoapp.Repo
+      alias Todoapp.Web.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint Todoapp.Endpoint
+      @endpoint Todoapp.Web.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Web.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Web.Repo, {:shared, self()})
     end
 
     :ok

@@ -1,8 +1,8 @@
-defmodule Todoapp.GuardianSerializer do
+defmodule Todoapp.Web.GuardianSerializer do
   @behaviour Guardian.Serializer
 
-  alias Todoapp.Repo
-  alias Todoapp.User
+  alias Todoapp.Web.Repo
+  alias Todoapp.Web.User
 
   def for_token(user = %User{}), do: { :ok, "User:#{user.id}" }
   def for_token(_), do: { :error, "Unknown resource type" }

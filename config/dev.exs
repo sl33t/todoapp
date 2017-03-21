@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :todoapp, Todoapp.Endpoint,
+config :todoapp, Todoapp.Web.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -16,13 +16,13 @@ config :todoapp, Todoapp.Endpoint,
 
 
 # Watch static and templates for browser reloading.
-config :todoapp, Todoapp.Endpoint,
+config :todoapp, Todoapp.Web.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{web/views/.*(ex)$},
-      ~r{web/templates/.*(eex)$}
+      ~r{lib/todoapp/web/views/.*(ex)$},
+      ~r{lib/todoapp/web/templates/.*(eex)$}
     ]
   ]
 
@@ -34,7 +34,7 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :todoapp, Todoapp.Repo,
+config :todoapp, Todoapp.Web.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",

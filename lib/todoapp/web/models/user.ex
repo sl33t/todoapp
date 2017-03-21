@@ -1,9 +1,9 @@
-defmodule Todoapp.User do
+defmodule Todoapp.Web.User do
   use Todoapp.Web, :model
 
-  alias Todoapp.Repo
-  alias Todoapp.User
-  alias Todoapp.Todolistitem
+  alias Todoapp.Web.Repo
+  alias Todoapp.Web.User
+  alias Todoapp.Web.Todolistitem
 
   schema "users" do
     field :name, :string

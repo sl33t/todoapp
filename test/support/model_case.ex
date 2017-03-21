@@ -1,4 +1,4 @@
-defmodule Todoapp.ModelCase do
+defmodule Todoapp.Web.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,20 +16,20 @@ defmodule Todoapp.ModelCase do
 
   using do
     quote do
-      alias Todoapp.Repo
+      alias Todoapp.Web.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Todoapp.ModelCase
+      import Todoapp.Web.ModelCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Web.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Web.Repo, {:shared, self()})
     end
 
     :ok
@@ -59,7 +59,7 @@ defmodule Todoapp.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&Todoapp.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&Todoapp.Web.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 end

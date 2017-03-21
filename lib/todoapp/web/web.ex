@@ -28,20 +28,20 @@ defmodule Todoapp.Web do
 
   def controller do
     quote do
-      use Phoenix.Controller
+      use Phoenix.Controller, namespace: Todoapp.Web
 
-      alias Todoapp.Repo
+      alias Todoapp.Web.Repo
       import Ecto
       import Ecto.Query
 
-      import Todoapp.Router.Helpers
-      import Todoapp.Gettext
+      import Todoapp.Web.Router.Helpers
+      import Todoapp.Web.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View, root: "lib/todoapp/web/templates", namespace: Todoapp.Web
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -49,9 +49,9 @@ defmodule Todoapp.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Todoapp.Router.Helpers
-      import Todoapp.ErrorHelpers
-      import Todoapp.Gettext
+      import Todoapp.Web.Router.Helpers
+      import Todoapp.Web.ErrorHelpers
+      import Todoapp.Web.Gettext
     end
   end
 
@@ -65,10 +65,10 @@ defmodule Todoapp.Web do
     quote do
       use Phoenix.Channel
 
-      alias Todoapp.Repo
+      alias Todoapp.Web.Repo
       import Ecto
       import Ecto.Query
-      import Todoapp.Gettext
+      import Todoapp.Web.Gettext
     end
   end
 

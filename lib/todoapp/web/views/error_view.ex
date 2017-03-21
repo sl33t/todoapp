@@ -1,4 +1,4 @@
-defmodule Todoapp.ErrorView do
+defmodule Todoapp.Web.ErrorView do
   use Todoapp.Web, :view
 
   def render("404.html", _assigns) do

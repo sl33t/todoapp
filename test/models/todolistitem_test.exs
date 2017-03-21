@@ -1,7 +1,7 @@
-defmodule Todoapp.TodolistitemTest do
-  use Todoapp.ModelCase
+defmodule Todoapp.Web.TodolistitemTest do
+  use Todoapp.Web.ModelCase
 
-  alias Todoapp.Todolistitem
+  alias Todoapp.Web.Todolistitem
 
   @valid_attrs %{text: "some content", order_by: 0}
   @invalid_attrs %{}

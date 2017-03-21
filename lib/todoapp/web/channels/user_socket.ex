@@ -1,4 +1,4 @@
-defmodule Todoapp.UserSocket do
+defmodule Todoapp.Web.UserSocket do
   use Phoenix.Socket
 
   ## Channels

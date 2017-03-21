@@ -1,4 +1,4 @@
-defmodule Todoapp.Router do
+defmodule Todoapp.Web.Router do
   use Todoapp.Web, :router
 
   pipeline :api do
@@ -8,7 +8,7 @@ defmodule Todoapp.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  scope "/api", Todoapp do
+  scope "/api", Todoapp.Web do
     pipe_through :api
 
     get "/get", TodolistitemController, :get
@@ -18,7 +18,7 @@ defmodule Todoapp.Router do
     post "/reorder", TodolistitemController, :reorder
   end
 
-  scope "/auth", Todoapp do
+  scope "/auth", Todoapp.Web do
     pipe_through :api
 
     post "/logout", AuthController, :delete

@@ -1,4 +1,4 @@
-defmodule Todoapp.ConnCase do
+defmodule Todoapp.Web.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,23 +20,23 @@ defmodule Todoapp.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Todoapp.Repo
+      alias Todoapp.Web.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
-      import Todoapp.Router.Helpers
+      import Todoapp.Web.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Todoapp.Endpoint
+      @endpoint Todoapp.Web.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todoapp.Web.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Todoapp.Web.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

@@ -7,14 +7,14 @@ use Mix.Config
 
 # General application configuration
 config :todoapp,
-  ecto_repos: [Todoapp.Repo]
+  ecto_repos: [Todoapp.Web.Repo]
 
 # Configures the endpoint
-config :todoapp, Todoapp.Endpoint,
+config :todoapp, Todoapp.Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  render_errors: [view: Todoapp.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Todoapp.PubSub,
+  render_errors: [view: Todoapp.Web.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Todoapp.Web.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
@@ -29,7 +29,7 @@ config :guardian, Guardian,
   ttl: { 30, :days },
   verify_issuer: true, # optional
   secret_key: System.get_env("GUARDIAN_SECRET"),
-  serializer: Todoapp.GuardianSerializer
+  serializer: Todoapp.Web.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

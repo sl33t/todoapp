@@ -1,8 +1,8 @@
-defmodule Todoapp.TodolistitemController do
+defmodule Todoapp.Web.TodolistitemController do
   require Logger
   use Todoapp.Web, :controller
 
-  alias Todoapp.Todolistitem
+  alias Todoapp.Web.Todolistitem
 
   def get(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)

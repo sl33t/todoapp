@@ -1,9 +1,9 @@
-defmodule Todoapp.TodolistitemControllerTest do
-  use Todoapp.ConnCase
+defmodule Todoapp.Web.TodolistitemControllerTest do
+  use Todoapp.Web.ConnCase
 
-  alias Todoapp.Todolistitem
-  alias Todoapp.User
-  alias Todoapp.Repo
+  alias Todoapp.Web.Todolistitem
+  alias Todoapp.Web.User
+  alias Todoapp.Web.Repo
   @valid_attrs %{text: "some content"}
   @valid_attrs2 %{text: "some content2"}
   @invalid_attrs %{text: nil}
@@ -14,8 +14,8 @@ defmodule Todoapp.TodolistitemControllerTest do
 
   def guardian_login(user, token \\ :token, opts \\ []) do
     build_conn()
-      |> bypass_through(Todoapp.Router, [:api])
-      |> get("/")
+      |> bypass_through(Todoapp.Web.Router, [:api])
+      |> get("/api/get")
       |> Guardian.Plug.sign_in(user, token, opts)
       |> send_resp(200, "Flush the session yo")
       |> recycle()

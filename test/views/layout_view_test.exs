@@ -1,3 +1,3 @@
-defmodule Todoapp.LayoutViewTest do
-  use Todoapp.ConnCase, async: true
+defmodule Todoapp.Web.LayoutViewTest do
+  use Todoapp.Web.ConnCase, async: true
 end

@@ -1,7 +1,7 @@
-defmodule Todoapp.Endpoint do
+defmodule Todoapp.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :todoapp
 
-  socket "/socket", Todoapp.UserSocket
+  socket "/socket", Todoapp.Web.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -41,5 +41,5 @@ defmodule Todoapp.Endpoint do
 
   plug Corsica, origins: "*", allow_headers: ["authorization"]
 
-  plug Todoapp.Router
+  plug Todoapp.Web.Router
 end
