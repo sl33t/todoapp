@@ -8,8 +8,12 @@ defmodule Todoapp.Web.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  pipeline :authenticated do
+    plug Guardian.Plug.EnsureAuthenticated, handler: Todoapp.Web.AuthErrorHandler
+  end
+
   scope "/api", Todoapp.Web do
-    pipe_through :api
+    pipe_through [:api, :authenticated]
 
     get "/get", TodolistitemController, :get
     post "/create", TodolistitemController, :create

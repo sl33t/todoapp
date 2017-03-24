@@ -1,8 +1,11 @@
 defmodule Todoapp.Web.ErrorView do
   use Todoapp.Web, :view
 
-  def render("404.html", _assigns) do
-    "Page not found"
+  def render("405.json", _assigns) do
+    %{
+      status: 403,
+      message: "You do not have access to this resource."
+    }
   end
 
   def render("500.html", _assigns) do

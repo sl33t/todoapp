@@ -13,12 +13,9 @@ defmodule Todoapp.Web.TodolistitemControllerTest do
   end
 
   def guardian_login(user, token \\ :token, opts \\ []) do
-    build_conn()
-      |> bypass_through(Todoapp.Web.Router, [:api])
-      |> get("/api/get")
-      |> Guardian.Plug.sign_in(user, token, opts)
-      |> send_resp(200, "Flush the session yo")
-      |> recycle()
+    {:ok, jwt, full_claims} =Guardian.encode_and_sign(user, :api)
+    conn = build_conn()
+    |> put_req_header("authorization", "Bearer #{jwt}")
   end
 
   setup do

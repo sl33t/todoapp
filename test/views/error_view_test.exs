@@ -4,9 +4,12 @@ defmodule Todoapp.Web.ErrorViewTest do
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View
 
-  test "renders 404.html" do
-    assert render_to_string(Todoapp.Web.ErrorView, "404.html", []) ==
-           "Page not found"
+  def assert_contains(search_text, target) do
+    assert String.contains?(search_text, target), ~s(Expected #{inspect search_text} to contain #{inspect target})
+  end
+
+  test "renders 405.json" do
+    assert_contains render_to_string(Todoapp.Web.ErrorView, "405.json", []), "You do not have access to this resource."
   end
 
   test "render 500.html" do
