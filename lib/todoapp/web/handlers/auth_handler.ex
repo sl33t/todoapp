@@ -1,6 +1,6 @@
 defmodule Todoapp.Web.AuthErrorHandler do
 
-  def unauthenticated(conn, two) do
+  def unauthenticated(_conn, _two) do
     raise Todoapp.Web.Forbidden
   end
 
