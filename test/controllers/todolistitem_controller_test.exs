@@ -12,10 +12,11 @@ defmodule Todoapp.Web.TodolistitemControllerTest do
     assert String.contains?(search_text, target), ~s(Expected #{inspect search_text} to contain #{inspect target})
   end
 
-  def guardian_login(user, token \\ :token, opts \\ []) do
-    {:ok, jwt, full_claims} =Guardian.encode_and_sign(user, :api)
-    conn = build_conn()
-    |> put_req_header("authorization", "Bearer #{jwt}")
+  def guardian_login(user) do
+    {:ok, jwt, _full_claims} =Guardian.encode_and_sign(user, :api)
+
+    build_conn()
+    |> put_req_header("authorization", jwt)
   end
 
   setup do
@@ -80,6 +81,8 @@ defmodule Todoapp.Web.TodolistitemControllerTest do
     user = Repo.get_by(User, name: "name")
     guardian_login(user)
     |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs)
+
+    guardian_login(user)
     |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs2)
 
     user = Repo.preload(user, todolistitems: from(todolistitem in Todolistitem, order_by: [desc: todolistitem.order_by], select: todolistitem.id))
