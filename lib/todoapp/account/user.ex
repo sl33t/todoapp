@@ -1,9 +1,9 @@
-defmodule Todoapp.Web.User do
+defmodule Todoapp.Account.User do
   use Todoapp.Web, :model
 
   alias Todoapp.Web.Repo
-  alias Todoapp.Web.User
-  alias Todoapp.Web.Todolistitem
+  alias Todoapp.Account.User
+  alias Todoapp.Todolist.Todolistitem
 
   @expected_fields ~w(
     azp aud sub email email_verified at_hash iss iat exp name picture given_name family_name locale alg kid

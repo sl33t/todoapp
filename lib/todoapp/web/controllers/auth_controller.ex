@@ -1,7 +1,7 @@
 defmodule Todoapp.Web.AuthController do
   use Todoapp.Web, :controller
 
-  alias Todoapp.Web.User
+  alias Todoapp.Account.User
 
   def login(conn, %{"user" => user_params}) do
     user_params = for {key, val} <- user_params, into: %{}, do: {String.to_atom(key), val}

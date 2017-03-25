@@ -1,7 +1,7 @@
-defmodule Todoapp.Web.Todolistitem do
+defmodule Todoapp.Todolist.Todolistitem do
   use Todoapp.Web, :model
 
-  alias Todoapp.Web.User
+  alias Account.User
 
   @derive {Poison.Encoder, only: [:id, :text]}
   schema "todolistitems" do

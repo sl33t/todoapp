@@ -1,8 +1,8 @@
 defmodule Todoapp.Web.TodolistitemControllerTest do
   use Todoapp.Web.ConnCase
 
-  alias Todoapp.Web.Todolistitem
-  alias Todoapp.Web.User
+  alias Todoapp.Todolist.Todolistitem
+  alias Todoapp.Account.User
   alias Todoapp.Web.Repo
   @valid_attrs %{text: "some content"}
   @valid_attrs2 %{text: "some content2"}
