@@ -9,7 +9,7 @@ defmodule Todoapp.Web.Router do
   end
 
   pipeline :authenticated do
-    plug Guardian.Plug.EnsureAuthenticated, handler: Todoapp.Web.AuthErrorHandler
+    plug Guardian.Plug.EnsureAuthenticated, handler: Todoapp.Web.AuthErrorController
   end
 
   scope "/api", Todoapp.Web do
