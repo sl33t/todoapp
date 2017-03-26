@@ -4,6 +4,7 @@ defmodule Todoapp.Web.TodolistitemController do
 
   alias Todoapp.Todolist.Todolistitem
   alias Todoapp.Account
+  alias Todoapp.Todolist
 
   def get(conn, _params) do
     current_user = conn
@@ -14,16 +15,8 @@ defmodule Todoapp.Web.TodolistitemController do
 
   def create(conn, %{"todolistitem" => todolistitem_params}) do
     current_user = conn
-    |> Account.get_current_user()
-    max_id = Repo.one(from(todolistitems in Todolistitem, select: max(todolistitems.order_by)))
-    max_id =
-      case max_id do
-        nil ->
-          0
-        num ->
-          num
-      end
-    todolistitem_params = Map.put(todolistitem_params, "order_by", max_id + 1)
+    |> Account.get_current_user_preloaded()
+    todolistitem_params = Map.put(todolistitem_params, "order_by", Todolist.get_max_todolistitem_id(current_user) + 1)
     changeset = current_user |> build_assoc(:todolistitems) |> Todolistitem.changeset(todolistitem_params)
 
     case Repo.insert(changeset) do
