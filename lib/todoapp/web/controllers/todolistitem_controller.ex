@@ -2,7 +2,6 @@ defmodule Todoapp.Web.TodolistitemController do
   require Logger
   use Todoapp.Web, :controller
 
-  alias Todoapp.Todolist.Todolistitem
   alias Todoapp.Account
   alias Todoapp.Todolist
 
@@ -16,10 +15,8 @@ defmodule Todoapp.Web.TodolistitemController do
   def create(conn, %{"todolistitem" => todolistitem_params}) do
     current_user = conn
     |> Account.get_current_user_preloaded()
-    todolistitem_params = Map.put(todolistitem_params, "order_by", Todolist.get_max_todolistitem_id(current_user) + 1)
-    changeset = current_user |> build_assoc(:todolistitems) |> Todolistitem.changeset(todolistitem_params)
 
-    case Repo.insert(changeset) do
+    case Todolist.add_new_todolist_item(current_user, todolistitem_params) do
       {:ok, todolistitem} ->
         json(conn, %{
           id: todolistitem.id,
@@ -38,14 +35,10 @@ defmodule Todoapp.Web.TodolistitemController do
   end
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
-    result = conn
+    user = conn
     |> Account.get_current_user
-    |> assoc(:todolistitems)
-    |> Repo.get(id)
-    |> Todolistitem.changeset(todolistitem_params)
-    |> Repo.update
 
-    case result do
+    case Todolist.update_todolist_item(user, id, todolistitem_params) do
       {:ok, _todolistitem} ->
         json(conn, %{flash_type: "info", flash_message: "Item updated successfully.", state: true})
       {:error, _changeset} ->
@@ -54,23 +47,10 @@ defmodule Todoapp.Web.TodolistitemController do
   end
 
   def delete(conn, %{"id" => id}) do
-    todolistitem = conn
+    conn
     |> Account.get_current_user
-    |> assoc(:todolistitems)
-    |> Repo.get(id)
-
-    Repo.delete!(todolistitem)
+    |> Todolist.delete_todolist_item(id)
 
     json(conn, %{flash_type: "info", flash_message: "Item deleted successfully.", state: true})
-  end
-
-  def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
-    current_user = conn
-    |> Account.get_current_user
-    Enum.reduce(serializedListOfTodoItems, 1, fn(item, count) ->
-      from(todoitem in assoc(current_user, :todolistitems), where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
-      count + 1
-    end)
-    json(conn, %{flash_type: "info", flash_message: "List order has been updated.", state: true})
   end
 end

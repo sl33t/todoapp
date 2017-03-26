@@ -76,44 +76,4 @@ defmodule Todoapp.Web.TodolistitemControllerTest do
     |> delete(todolistitem_path(conn, :delete, todolistitem))
     refute Repo.get(Todolistitem, todolistitem.id)
   end
-
-  test "reorder success", %{conn: conn} do
-    user = Repo.get_by(User, name: "name")
-    guardian_login(user)
-    |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs)
-
-    guardian_login(user)
-    |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs2)
-
-    user = Repo.preload(user, todolistitems: from(todolistitem in Todolistitem, order_by: [desc: todolistitem.order_by], select: todolistitem.id))
-
-    todoitem_1_position = Repo.get_by(Todolistitem, @valid_attrs).order_by
-    todoitem_2_position = Repo.get_by(Todolistitem, @valid_attrs2).order_by
-
-    guardian_login(user)
-    |> post(todolistitem_path(conn, :reorder), serializedListOfTodoItems: user.todolistitems)
-
-    assert Repo.get_by(Todolistitem, @valid_attrs).order_by == todoitem_2_position
-    assert Repo.get_by(Todolistitem, @valid_attrs2).order_by == todoitem_1_position
-  end
-
-  test "reorder failure by passing in a second users todolistitems", %{conn: conn} do
-    user = Repo.get_by(User, name: "name")
-    guardian_login(user)
-    |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs)
-
-    user2 = Repo.get_by(User, name: "name2")
-    guardian_login(user2)
-    |> post(todolistitem_path(conn, :create), todolistitem: @valid_attrs2)
-
-    user = Repo.preload(user, todolistitems: from(todolistitem in Todolistitem, order_by: [desc: todolistitem.order_by], select: todolistitem.id))
-    user2 = Repo.preload(user2, todolistitems: from(todolistitem in Todolistitem, order_by: [desc: todolistitem.order_by], select: todolistitem.id))
-
-    todoitem_1_position = Repo.get_by(Todolistitem, @valid_attrs).order_by
-
-    guardian_login(user)
-    |> post(todolistitem_path(conn, :reorder), serializedListOfTodoItems: user.todolistitems ++ user2.todolistitems)
-
-    refute  Repo.get_by(Todolistitem, @valid_attrs2).order_by == todoitem_1_position
-  end
 end
