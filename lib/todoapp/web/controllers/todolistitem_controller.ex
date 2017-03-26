@@ -3,18 +3,18 @@ defmodule Todoapp.Web.TodolistitemController do
   use Todoapp.Web, :controller
 
   alias Todoapp.Todolist.Todolistitem
+  alias Todoapp.Account
 
   def get(conn, _params) do
-    current_user = Guardian.Plug.current_resource(conn)
-    current_user = Repo.preload(current_user, :todolistitems)
+    current_user = conn
+    |> Account.get_current_user_preloaded()
 
     render conn, "get.json", todolistitems: current_user.todolistitems
   end
 
   def create(conn, %{"todolistitem" => todolistitem_params}) do
     current_user = conn
-    |> Guardian.Plug.current_resource
-    |> Repo.preload(:todolistitems)
+    |> Account.get_current_user()
     max_id = Repo.one(from(todolistitems in Todolistitem, select: max(todolistitems.order_by)))
     max_id =
       case max_id do
@@ -46,7 +46,7 @@ defmodule Todoapp.Web.TodolistitemController do
 
   def update(conn, %{"id" => id, "todolistitem" => todolistitem_params}) do
     result = conn
-    |> Guardian.Plug.current_resource
+    |> Account.get_current_user
     |> assoc(:todolistitems)
     |> Repo.get(id)
     |> Todolistitem.changeset(todolistitem_params)
@@ -62,7 +62,7 @@ defmodule Todoapp.Web.TodolistitemController do
 
   def delete(conn, %{"id" => id}) do
     todolistitem = conn
-    |> Guardian.Plug.current_resource
+    |> Account.get_current_user
     |> assoc(:todolistitems)
     |> Repo.get(id)
 
@@ -72,7 +72,8 @@ defmodule Todoapp.Web.TodolistitemController do
   end
 
   def reorder(conn, %{"serializedListOfTodoItems" => serializedListOfTodoItems}) do
-    current_user = Guardian.Plug.current_resource(conn)
+    current_user = conn
+    |> Account.get_current_user
     Enum.reduce(serializedListOfTodoItems, 1, fn(item, count) ->
       from(todoitem in assoc(current_user, :todolistitems), where: todoitem.id == ^item, update: [set: [order_by: ^count]]) |> Repo.update_all([])
       count + 1

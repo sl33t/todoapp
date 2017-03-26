@@ -41,4 +41,13 @@ defmodule Todoapp.Account do
     end
   end
 
+  def get_current_user(conn) do
+      Guardian.Plug.current_resource(conn)
+  end
+
+  def get_current_user_preloaded(conn) do
+      Guardian.Plug.current_resource(conn)
+      |> Repo.preload(:todolistitems)
+  end
+
 end

@@ -18,9 +18,8 @@ defmodule Todoapp.Web.AuthController do
           flash_type: "info",
           flash_message: user.name <> " has been logged in."
         })
-      {:error, reason} ->
+      {:error, _reason} ->
         conn
-        |> put_flash(:error, reason)
         |> json(%{
           flash_type: "danger",
           flash_message: "Login failed"
