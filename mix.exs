@@ -30,7 +30,7 @@ defmodule Todoapp.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.3.0-rc"},
+    [{:phoenix, ">= 1.3.0-rc"},
      {:phoenix_pubsub, ">= 0.0.0"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, ">= 0.0.0"},
@@ -41,7 +41,7 @@ defmodule Todoapp.Mixfile do
      {:guardian, ">= 0.0.0"},
      {:corsica, "~> 0.5"},
      {:httpoison, "~> 0.10.0"},
-     {:credo, "~> 0.3", only: [:dev, :test]}]
+     {:credo, ">= 0.7.4", only: [:dev, :test], runtime: false}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
