@@ -1,9 +1,16 @@
 language: elixir
 elixir:
-  - 1.3
+- 1.3
 otp_release:
-  - 18.0
-  - 18.3
+- 18.0
+- 18.3
 after_script:
-  - mix deps.get
-  - mix inch.report
+- mix deps.get
+- mix inch.report
+deploy:
+  provider: heroku
+  api_key:
+    secure: WBk5T9h6R2lEtJ2ZPorb8KLuyZ6qnHAYJYhSU1soSs64D+gF6/SWr8tqv7zKc0sb9jVratQtqoh0qsIKgO7L81OGt7chmXh2ADfbVIE+W0JNUKL97mIFs254P+rWZb6Fp2GFxAE+ZPj5AX2UogrpEJX2weacLambsDUkaFLkd0Aeq89zfluCxOM7q7QflbfDtC/p7uWVCMjrfOPLm45lGLw9CdKwKr/vhGnY/vHBjmJPNGWBn+YbVlNcivEPsibaO4TToenN1oa9XAGk2niAuXDaO9SCv7RXwPnzUr/exlqfnXRVOEVBtuJ0hmH9fgViie/wUPQ3b+aowKzk1HtnnGUcuYzjdmle6VSJexi99Pc2tL7ID6K8yKw5DL4P78DYpUpCzjBfjBE+vzqm+jrCd5mu6yjHfTU+wbaI14wp3jcvX+1vRTiugWX8+hOQwuNQ7ElbHnHwXbVDPrAQzyVWIwRGWqHv8j4pGjdN3StRZDP+J16Mf4Ui4yleVx1bVi9rEqETfsqDVEZ6dTe7/m3dzl9gbf57XKR4my+lr0gF3lQqFI3nxXElAPXbUX+nOmniFPkvF/HhX9Cj1FOeEQpevlJYmCm0nwB8DEpeORYizGNYGOIauLtiRSD52TmwlCteIqiiq39Ch9eYEMUnjfWr5vPeo7MqsvHDn7yHOm8KDSI=
+  app: todoapp
+  on:
+    repo: sl33t/todoapp
