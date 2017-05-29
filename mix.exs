@@ -35,7 +35,7 @@ defmodule Todoapp.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, ">= 0.0.0"},
      {:phoenix_live_reload, ">= 0.0.0"},
-     {:phoenix_ecto, git: "git@github.com:phoenixframework/phoenix_ecto.git"},
+     {:phoenix_ecto, ">= 3.2.0"},
      {:gettext, ">= 0.0.0"},
      {:cowboy, ">= 0.0.0"},
      {:guardian, ">= 0.0.0"},
