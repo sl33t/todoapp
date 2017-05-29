@@ -42,7 +42,7 @@ defmodule Todoapp.Mixfile do
      {:corsica, "~> 0.5"},
      {:httpoison, "~> 0.10.0"},
      {:credo, ">= 0.7.4", only: [:dev, :test], runtime: false},
-     {:inch_ex, only: :docs}]
+     {:inch_ex, "~> 0.5", only: [:dev, :test]}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
