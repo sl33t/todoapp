@@ -1,7 +1,7 @@
 defmodule Todoapp.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :todoapp
 
-  plug Corsica, origins: "*", allow_headers: ["authorization"]
+  plug Corsica, origins: "*", allow_headers: ["content-type", "authorization"]
 
   socket "/socket", Todoapp.Web.UserSocket
 
