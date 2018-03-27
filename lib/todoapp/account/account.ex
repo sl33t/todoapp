@@ -16,8 +16,8 @@ defmodule Todoapp.Account do
         |> Map.take(@expected_fields)
         |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
 
-        case System.get_env("GOOGLE_CLIENT_ID") == body[:aud] do
-          true -> :ok
+        case System.get_env("GOOGLE_CLIENT_ID") == body.aud do
+          true -> {:ok, body}
           false ->
             raise Todoapp.Web.Forbidden
         end
@@ -29,9 +29,9 @@ defmodule Todoapp.Account do
   end
 
   def find_or_create(info) do
-    case Repo.get_by(User, oauth_id: info.oauth_id) do
+    case Repo.get_by(User, email: info.email) do
       nil ->
-        new_user_changeset = User.changeset(%User{}, %{name: info.name, oauth_id: info.oauth_id, avatar: info.avatar, email: info.email})
+        new_user_changeset = User.changeset(%User{}, %{name: info.name, oauth_id: "1", avatar: info.picture, email: info.email})
 
         case Repo.insert(new_user_changeset) do
           {:ok, new_user} -> {:ok, new_user}

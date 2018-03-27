@@ -3,12 +3,12 @@ defmodule Todoapp.Web.AuthController do
 
   alias Todoapp.Account
 
-  def login(conn, %{"user" => user_params}) do
+  def login(conn, %{"token" => token}) do
     user_params = for {key, val} <- user_params, into: %{}, do: {String.to_atom(key), val}
 
-    Account.verify_user(user_params.token)
+    verified_user = Account.verify_user(token)
 
-    case Account.find_or_create(user_params) do
+    case Account.find_or_create(verified_user) do
       {:ok, user} ->
         { :ok, jwt, full_claims } = Guardian.encode_and_sign(user, :api)
         conn
@@ -16,7 +16,7 @@ defmodule Todoapp.Web.AuthController do
           jwt: jwt,
           full_claims: full_claims,
           flash_type: "info",
-          flash_message: user.name <> " has been logged in."
+          user: user
         })
       {:error, _reason} ->
         conn
