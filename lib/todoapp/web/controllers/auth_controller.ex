@@ -4,8 +4,6 @@ defmodule Todoapp.Web.AuthController do
   alias Todoapp.Account
 
   def login(conn, %{"token" => token}) do
-    user_params = for {key, val} <- user_params, into: %{}, do: {String.to_atom(key), val}
-
     verified_user = Account.verify_user(token)
 
     case Account.find_or_create(verified_user) do
