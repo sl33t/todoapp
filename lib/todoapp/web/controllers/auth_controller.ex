@@ -4,7 +4,7 @@ defmodule Todoapp.Web.AuthController do
   alias Todoapp.Account
 
   def login(conn, %{"token" => token}) do
-    verified_user = Account.verify_user(token)
+    {:ok, verified_user} = Account.verify_user(token)
 
     case Account.find_or_create(verified_user) do
       {:ok, user} ->
