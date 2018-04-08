@@ -24,12 +24,4 @@ defmodule Todoapp.Web.AuthController do
         })
     end
   end
-
-  def delete(conn, _params) do
-    Guardian.Plug.sign_out(conn)
-    |> json(%{
-      flash_type: "info",
-      flash_message: "You have been logged out."
-    })
-  end
 end

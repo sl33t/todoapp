@@ -3,7 +3,7 @@ defmodule Todoapp.Account.User do
 
   alias Todoapp.Todolist.Todolistitem
 
-  @derive {Poison.Encoder, only: [:name, :oauth_id, :avatar, :email]}
+  @derive {Poison.Encoder, only: [:name, :avatar, :email]}
   schema "users" do
     field :name, :string
     field :oauth_id, :string

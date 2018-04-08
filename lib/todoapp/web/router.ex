@@ -21,10 +21,15 @@ defmodule Todoapp.Web.Router do
     delete "/delete/:id", TodolistitemController, :delete
   end
 
+  scope "/user", Todoapp.Web do
+    pipe_through [:api, :authenticated]
+
+    get "/get", UserController, :get
+  end
+
   scope "/auth", Todoapp.Web do
     pipe_through :api
 
-    post "/logout", AuthController, :delete
     post "/login", AuthController, :login
   end
 end
